@@ -1,6 +1,10 @@
 // shamelessly copied from: https://github.com/medikoo/es6-symbol/blob/a665c611b96c72b177f70d2e5c253e2e0a2f22cc/is-symbol.js
 
+var toString = Object.prototype.toString;
+
 module.exports = function issymbol(x) {
     'use strict';
-    return (x && ((typeof x === 'symbol') || (x['@@toStringTag'] === 'Symbol'))) || false;
+    return (x && ((typeof x === 'symbol')
+        || (x['@@toStringTag'] === 'Symbol')
+        || toString.call(x) === '[object Symbol]')) || false;
 };

@@ -2,6 +2,31 @@ var core = require('core-js/library');
 var chai = require('chai');
 var expect = chai.expect;
 
+var NativeSymbol = (function() {
+    if (typeof Symbol !== 'function') {
+        return;
+    }
+
+    var symbol = Symbol('test');
+
+    try {
+        String(symbol);
+    } catch (e) {
+        return;
+    }
+
+    if (typeof Symbol.isConcatSpreadable !== 'object') return;
+    if (typeof Symbol.iterator !== 'object') return;
+    if (typeof Symbol.toPrimitive !== 'object') return;
+    if (typeof Symbol.toStringTag !== 'object') return;
+    if (typeof Symbol.unscopables !== 'object') return;
+    if (typeof Symbol.iterator != 'symbol') return;
+
+    return Symbol;
+})();
+
+require('core-js');
+
 describe('issymbol', function() {
 
     var issymbol;
@@ -18,27 +43,11 @@ describe('issymbol', function() {
     // adapted from: https://github.com/medikoo/es6-symbol/blob/a665c611b96c72b177f70d2e5c253e2e0a2f22cc/is-implemented.js
     it('should return true for any native Symbol', function() {
 
-        if (typeof Symbol !== 'function') {
+        if(!NativeSymbol) {
             return;
         }
 
-        var symbol = Symbol('test');
-
-        try {
-            String(symbol);
-        } catch (e) {
-            return;
-        }
-
-        if (typeof Symbol.isConcatSpreadable !== 'object') return;
-        if (typeof Symbol.iterator !== 'object') return;
-        if (typeof Symbol.toPrimitive !== 'object') return;
-        if (typeof Symbol.toStringTag !== 'object') return;
-        if (typeof Symbol.unscopables !== 'object') return;
-        if (typeof Symbol.iterator != 'symbol') return;
-
-        // found native implemented Symbol
-
+        var symbol = NativeSymbol('');
         expect(issymbol(symbol)).to.equal(true);
     });
 

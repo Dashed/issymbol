@@ -1,6 +1,6 @@
 {
   "name": "issymbol",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Test if something is a Symbol. Works with either native or polyfill Symbols.",
   "main": "src/index.js",
   "scripts": {
